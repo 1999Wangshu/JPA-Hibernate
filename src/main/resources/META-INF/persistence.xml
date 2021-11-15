@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+    <!--
+        配置使用什么ORM 产品作为JPA 的实现
+        1.实际上配置的是 javax.persistence.spi.PersistenceProvider 接口的实现类
+        2.若JPA项目中只有一个JPA的实现产品，则也可以不配置该节点。
+        -->
+    <persistence-unit name="NewPersistenceUnit">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <!-- 添加持久化类-->
+        <class>com.pojo.Dept</class>
+        <class>com.pojo.Emp</class>
+        <class>com.pojo.Manager</class>
+        <class>homework.Salgrade</class>
+        <class>homework.Person</class>
+        <class>homework.Cclass</class>
+        <class>homework.Student</class>
+
+        <properties>
+        <!--<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql:///?useUnicode=true&amp;characterEncoding=UTF8</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password"></property>-->
+
+        <property name="hibernate.connection.url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
+        <property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver"/>
+        <property name="hibernate.connection.username" value="scott"/>
+        <property name="hibernate.connection.password" value="tiger"/>
+
+        <!-- 配置JPA 实现产品的基本属性，配置hibernate 的基本属性 -->
+        <!-- 自动显示SQL -->
+        <property name="hibernate.show_sql" value="true"/>
+        <!-- 格式化sql -->
+        <property name="hibernate.format_sql" value="true"/>
+        <!--生成数据表的策略-->
+        <!--**注意这个属性，自动生成的文件前面没有 hibernate，要加上 hibernate** -->
+        <property name="hibernate.hbm2ddl.auto" value="update"/>
+        <!-- 指定数据库方言,使用 MySQL8Dialect -->
+        <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+
+    </properties>
+
+    </persistence-unit>
+</persistence>
+

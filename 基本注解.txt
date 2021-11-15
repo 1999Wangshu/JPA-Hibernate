@@ -1,0 +1,31 @@
+JPA基本注解
+    @Entity     标注用于实体类上,指出该Java类为实体类,
+                将映射到指定的数据库表
+                @Table当实体类与其映射的数据库表名不同名时使用
+
+    @Transient  派生属性,工具方法(没有set方法),不需要映射为数据表的列
+    @Temporal   指定时间字段映射成什么类型,TemporalType.DATE(日期)
+                TemporalType.TIME(时间)TIMESTAMP(日期+时间)
+
+    @Table
+    @ld         映射主键
+    @GeneratedValue.主键生成方式(策略)
+                    IDENTITY :数据库ID自增长的方式来自增主键字段, Oracle不支持
+                    AUTO: JPA自动选择合适的策略,是默认选项;
+                    SEQUENCE :序列产生.通过@SequenceGenerator注解指定序列名, MySgl不支持
+                    TABLE :通过表产生主键,框架借由表模拟序列产生主键,使用该策略可以
+                    应用更易于数据库移植。
+    @Column     指定列,可指定列名,unique(唯一),nullable,length(长度)
+    @Basic      自动映射,不写也默认加了,fetch属性:该属性的读取策略,有EAGER(立即加载默认)和LAZY两种,
+
+用table策略来生成主键详解:特殊的业务场景会用到
+        //需要一个表
+        @TableGenerator(name="ID_GENERATOR",//generator属性的值
+                        table = "id_generators",//表名
+                        pkColumnName = "PK_NAME",//列名
+                        pkColumnValue = "EMP_ID",//对应表PK_NAME列的值
+                        valueColumnName = "PK_VALUE",//列名
+                        allocationSize = 10    //生成主键每次增10,第一列10,第二次20
+
+        )
+        @GeneratedValue(strategy = GenerationType.TABLE,generator = "ID_GENERATOR")
